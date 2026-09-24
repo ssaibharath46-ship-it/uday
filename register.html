@@ -11,7 +11,7 @@
 <div class="login-card register-card">
   <div class="logo-box">📝</div>
   <h1>Create Student Account</h1>
-  <p class="sub">Register once and your account will be connected to the Admin dashboard.</p>
+  <p class="sub">Create your own student account. You can register multiple students with different email IDs.</p>
 
   <form id="registerForm">
     <label>Full Name</label>
@@ -52,13 +52,7 @@
         </select>
       </div>
     </div>
-
-
-    <label>Account Type</label>
-    <select id="regRole"><option value="student">Student</option><option value="parent">Parent</option></select>
-    <div id="linkedBox" style="display:none"><label>Student Email to Link</label><input id="regStudentEmail" type="email" placeholder="student@gmail.com"></div>
-
-    <label>Password</label>
+<label>Password</label>
     <input id="regPassword" type="password" minlength="6" placeholder="Minimum 6 characters" required>
 
     <label>Confirm Password</label>
@@ -66,13 +60,7 @@
 
     <button class="btn primary full" type="submit">Create Account</button>
   </form>
-  <script>
-    document.getElementById("regRole").addEventListener("change",function(){
-      document.getElementById("linkedBox").style.display=this.value==="parent"?"block":"none";
-      document.getElementById("regId").placeholder=this.value==="parent"?"Optional":"Example: 2500031331";
-    });
-  </script>
-  <div id="registerMsg" class="msg"></div>
+<div id="registerMsg" class="msg"></div>
   <p class="register-link"><a href="index.html">← Back to Login</a></p>
 </div>
 <script src="script.js"></script>

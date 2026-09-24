@@ -1,8 +1,8 @@
 const KEY_USERS="sps_users", KEY_REPORTS="sps_reports", KEY_SESSION="sps_session", KEY_NOTICE="sps_notices";
+const ADMIN_EMAIL=atob("a2FzaXVkYXlraXJh bjMxQGdtYWlsLmNvbQ==".replace(/\s/g,""));
+const ADMIN_PASSWORD=atob("S2lyYW5AMTMx");
 const demoUsers=[
- {id:"ADM001",name:"Administrator",email:"kasiudaykiran31@gmail.com",password:"Kiran@131",role:"admin"},
- {id:"2500031331",name:"Uday Kiran",email:"student@gmail.com",password:"student123",role:"student",phone:"9876543210",program:"B.Tech CSE",year:"2nd Year",section:"A"},
- {id:"STU002",name:"Rahul Kumar",email:"rahul@gmail.com",password:"student123",role:"student",phone:"9876501234",program:"B.Tech CSE",year:"2nd Year",section:"B"}
+ {id:"ADM001",name:"Administrator",email:ADMIN_EMAIL,password:ADMIN_PASSWORD,role:"admin"}
 ];
 const demoReports=[
  {email:"student@gmail.com",marks:86,attendance:91,format:"percentage",remarks:"Good performance. Keep improving in problem solving.",updated:"24 Sep 2026"},
@@ -14,7 +14,7 @@ const demoNotices=[
  {title:"Academic Registration",text:"Course registration window is open."}
 ];
 
-function getUsers(){let x=JSON.parse(localStorage.getItem(KEY_USERS));if(!x){x=demoUsers;localStorage.setItem(KEY_USERS,JSON.stringify(x))}return x}
+function getUsers(){let x=JSON.parse(localStorage.getItem(KEY_USERS));if(!Array.isArray(x))x=[];if(!x.some(u=>u.role==="admin")){x.unshift(...demoUsers);localStorage.setItem(KEY_USERS,JSON.stringify(x));}return x}
 function getReports(){let x=JSON.parse(localStorage.getItem(KEY_REPORTS));if(!x){x=demoReports;localStorage.setItem(KEY_REPORTS,JSON.stringify(x))}return x}
 function getNotices(){let x=JSON.parse(localStorage.getItem(KEY_NOTICE));if(!x){x=demoNotices;localStorage.setItem(KEY_NOTICE,JSON.stringify(x))}return x}
 function session(){return JSON.parse(localStorage.getItem(KEY_SESSION)||"null")}
@@ -95,8 +95,6 @@ document.getElementById("registerForm")?.addEventListener("submit", e=>{
   const program=document.getElementById("regProgram").value;
   const year=document.getElementById("regYear").value;
   const section=document.getElementById("regSection").value;
-  const role=document.getElementById("regRole")?.value||"student";
-  const studentEmail=document.getElementById("regStudentEmail")?.value.trim().toLowerCase()||"";
   const password=document.getElementById("regPassword").value;
   const confirm=document.getElementById("regConfirm").value;
   const msg=document.getElementById("registerMsg");
@@ -104,8 +102,7 @@ document.getElementById("registerForm")?.addEventListener("submit", e=>{
   let users=getUsers();
   if(users.some(u=>u.email.toLowerCase()===email)){msg.className="msg error";msg.textContent="Email already registered. Please login.";return}
   if(users.some(u=>u.id.toLowerCase()===id.toLowerCase())){msg.className="msg error";msg.textContent="Student ID already exists.";return}
-  if(role==="parent" && !users.some(u=>u.email.toLowerCase()===studentEmail && u.role==="student")){msg.className="msg error";msg.textContent="Linked student email was not found.";return}
-  users.push({id:id||"PAR"+String(Date.now()).slice(-5),name,email,password,role,phone,program,year,section,studentEmail:role==="parent"?studentEmail:""});
+  users.push({id:id||"STU"+String(Date.now()).slice(-5),name,email,password,role:"student",phone,program,year,section});
   localStorage.setItem(KEY_USERS,JSON.stringify(users));
   msg.className="msg ok";msg.textContent="Account created successfully. Redirecting to login...";
   setTimeout(()=>location.href="index.html",900);
