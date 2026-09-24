@@ -16,7 +16,7 @@
     <div class="brand-logo"><span>🎓</span><div><b>KLU ERP</b><small>STUDENT INFORMATION SYSTEM</small></div></div>
     <div class="login-tabs">
       <button class="login-tab active" data-role="student">Student Login</button>
-      <button class="login-tab" data-role="admin">Admin Login</button><button class="login-tab" data-role="parent">Parent Login</button>
+      <button class="login-tab" data-role="admin">Admin Login</button>
     </div>
     <div class="login-title"><h1 id="loginTitle">Welcome back 👋</h1><p id="loginSubtitle">Sign in to access your student dashboard</p></div>
     <form id="loginForm">
@@ -50,7 +50,6 @@
       <button class="nav-item" data-page="timetable"><span>🕘</span>Time Table</button>
       <button class="nav-item" data-page="assignments"><span>📝</span>Assignments</button>
       <button class="nav-item" data-page="notices"><span>📢</span>Notices</button>
-      <button class="nav-item" data-page="analytics"><span>📊</span>Analytics</button>
       <button class="nav-item" data-page="reports"><span>📄</span>Reports</button>
     </nav>
     <nav id="adminNav" class="hidden">
@@ -61,10 +60,6 @@
       <button class="nav-item" data-page="manageFees"><span>💳</span>Fees</button>
       <button class="nav-item" data-page="manageNotices"><span>📢</span>Notices</button>
       <button class="nav-item" data-page="reports"><span>📄</span>Reports</button>
-    </nav>
-    <nav id="parentNav" class="hidden">
-      <button class="nav-item active" data-page="parentDashboard"><span>👨‍👩‍👦</span>Parent Dashboard</button>
-      <button class="nav-item" data-page="parentReports"><span>📄</span>Student Reports</button>
     </nav>
     <div class="side-bottom">
       <button class="nav-item" onclick="toggleTheme()"><span>🌙</span>Dark Mode</button>
@@ -187,54 +182,6 @@
   </main>
 </div>
 
-
-      <!-- ANALYTICS -->
-      <section class="page" id="page-analytics">
-        <div class="page-head"><div><span class="eyebrow">PERFORMANCE</span><h2>Academic Analytics</h2><p>Understand performance trends and subjects that need attention.</p></div></div>
-        <div class="stat-grid">
-          <div class="stat-card"><div class="stat-icon blue">📈</div><div><small>Current CGPA</small><strong id="analyticsCgpa">8.62</strong><em>Semester trend</em></div></div>
-          <div class="stat-card"><div class="stat-icon green">🎯</div><div><small>Strong Subjects</small><strong id="strongSubjects">0</strong><em class="green-text">75%+ attendance</em></div></div>
-          <div class="stat-card"><div class="stat-icon orange">⚠️</div><div><small>Needs Attention</small><strong id="weakSubjects">0</strong><em>Performance / attendance</em></div></div>
-          <div class="stat-card"><div class="stat-icon purple">📝</div><div><small>Assignments</small><strong>80%</strong><em>Completion rate</em></div></div>
-        </div>
-        <div class="two-col">
-          <div class="panel"><div class="panel-head"><h3>Performance Trend</h3><span class="live-badge">● UPDATED</span></div><div class="chart-wrap"><canvas id="analyticsChart"></canvas></div></div>
-          <div class="panel"><div class="panel-head"><h3>Teacher Remarks</h3></div><div id="remarksList"></div></div>
-        </div>
-      </section>
-
-      <!-- PARENT DASHBOARD -->
-      <section class="page" id="page-parentDashboard">
-        <div class="welcome-banner"><div><span class="eyebrow">PARENT PORTAL</span><h2>Academic Progress of <span>Uday Kiran</span> 👨‍👩‍👦</h2><p>Read-only access to attendance, results, remarks and academic progress.</p></div><div class="banner-shape">✦</div></div>
-        <div class="stat-grid">
-          <div class="stat-card"><div class="stat-icon blue">🎓</div><div><small>CGPA</small><strong>8.62</strong><em>Current semester</em></div></div>
-          <div class="stat-card"><div class="stat-icon green">🗓️</div><div><small>Attendance</small><strong>86%</strong><em class="green-text">Good standing</em></div></div>
-          <div class="stat-card"><div class="stat-icon orange">📚</div><div><small>Subjects</small><strong>4</strong><em>Current semester</em></div></div>
-          <div class="stat-card"><div class="stat-icon purple">📝</div><div><small>Assignments</small><strong>80%</strong><em>Completion</em></div></div>
-        </div>
-        <div class="two-col">
-          <div class="panel"><div class="panel-head"><h3>Latest Teacher Remarks</h3></div>
-            <div class="notice"><h3>Java Programming</h3><p>Good understanding of core concepts. Continue practicing problem solving.</p></div>
-            <div class="notice"><h3>Engineering Mathematics</h3><p>Needs additional practice in problem-solving and revision.</p></div>
-          </div>
-          <div class="panel"><div class="panel-head"><h3>Academic Summary</h3></div>
-            <div class="info-grid">
-              <div><small>Student ID</small><b>2500031331</b></div><div><small>Program</small><b>B.Tech · CSE</b></div>
-              <div><small>Semester</small><b>IV</b></div><div><small>Batch</small><b>2024–2028</b></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="page" id="page-parentReports">
-        <div class="page-head"><div><span class="eyebrow">PARENT PORTAL</span><h2>Student Reports</h2><p>View academic reports and progress without editing student data.</p></div><button class="primary-btn" onclick="printReport()">🖨 Print Report</button></div>
-        <div class="panel"><div class="panel-head"><h3>Current Semester Report</h3></div><div class="table-scroll"><table><thead><tr><th>Subject</th><th>Internal</th><th>Final</th><th>Total</th><th>Grade</th><th>Attendance</th></tr></thead><tbody>
-          <tr><td>Java Programming</td><td>36</td><td>52</td><td>88</td><td>A</td><td>91%</td></tr>
-          <tr><td>Data Structures</td><td>34</td><td>49</td><td>83</td><td>A</td><td>84%</td></tr>
-          <tr><td>Database Systems</td><td>35</td><td>53</td><td>88</td><td>A</td><td>87%</td></tr>
-          <tr><td>Engineering Mathematics</td><td>29</td><td>44</td><td>73</td><td>B</td><td>74%</td></tr>
-        </tbody></table></div></div>
-      </section>
 <script src="script.js"></script>
 </body>
 </html>

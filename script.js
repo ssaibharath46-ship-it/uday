@@ -61,40 +61,29 @@ function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",
 
 document.querySelectorAll(".login-tab").forEach(t=>t.onclick=()=>{
  document.querySelectorAll(".login-tab").forEach(x=>x.classList.remove("active"));t.classList.add("active");
- const r=t.dataset.role;
- const isAdmin=r==="admin", isParent=r==="parent";
- $("loginTitle").textContent=isAdmin?"Administrator Login":isParent?"Parent Login":"Welcome back 👋";
- $("loginSubtitle").textContent=isAdmin?"Manage the complete ERP control center":isParent?"View your child's academic reports":"Sign in to access your student dashboard";
- $("loginUserLabel").textContent=isAdmin?"Admin Username":isParent?"Parent Username":"Student ID";
- $("loginUser").value="";$("loginPass").value="";
- $("loginHint").innerHTML=""; 
+ const admin=t.dataset.role==="admin"; $("loginTitle").textContent=admin?"Administrator Login":"Welcome back 👋";
+ $("loginSubtitle").textContent=admin?"Manage the complete ERP control center":"Sign in to access your student dashboard";
+ $("loginUserLabel").textContent=admin?"Admin Username":"Student ID";
+ $("loginUser").value=admin?"admin":"2500031331";$("loginPass").value=admin?"admin123":"student123";
+ $("loginHint").innerHTML=admin?"Admin demo: <b>admin</b> / <b>admin123</b>":"Student demo: <b>2500031331</b> / <b>student123</b>";
 });
-$("loginForm").onsubmit=e=>{e.preventDefault();
- const active=document.querySelector(".login-tab.active").dataset.role;
- const u=$("loginUser").value.trim(),p=$("loginPass").value;
- const admin=active==="admin", parent=active==="parent";
- const studentOK=!admin&&!parent&&db.students.some(s=>s.id===u)&&p==="student123";
- const adminOK=admin&&u==="admin"&&p==="admin123";
- const parentOK=parent&&u==="parent"&&p==="parent123";
- if(studentOK||adminOK||parentOK){
-  role=admin?"admin":parent?"parent":"student";
-  session={role,id:admin||parent?null:u};localStorage.setItem(SESSION_KEY,JSON.stringify(session));loadApp();toast("Signed in successfully");
- }else toast("Invalid login details.");
-};
-function demoCredentials(e){e.preventDefault();toast("Enter your assigned account credentials.")}
+$("loginForm").onsubmit=e=>{e.preventDefault();const admin=document.querySelector(".login-tab.active").dataset.role==="admin";const u=$("loginUser").value.trim(),p=$("loginPass").value;
+ if((admin&&u==="admin"&&p==="admin123")||(!admin&&db.students.some(s=>s.id===u)&&p==="student123")){
+  role=admin?"admin":"student";session={role,id:admin?null:u};localStorage.setItem(SESSION_KEY,JSON.stringify(session));loadApp();toast("Signed in successfully");
+ }else toast("Invalid credentials. Use the demo credentials shown below.")};
+function demoCredentials(e){e.preventDefault();toast("Student: 2500031331 / student123 · Admin: admin / admin123")}
 function loadApp(){
  $("loginScreen").classList.add("hidden");$("app").classList.remove("hidden");
- if(role==="admin"){$("studentNav").classList.add("hidden");$("adminNav").classList.remove("hidden");$("parentNav").classList.add("hidden");$("sideName").textContent="Administrator";$("sideId").textContent="ERP Admin";$("sideAvatar").textContent="AD";$("topName").textContent="Administrator";$("topAvatar").textContent="AD";openPage("adminDashboard")}
- else if(role==="parent"){$("studentNav").classList.add("hidden");$("adminNav").classList.add("hidden");$("parentNav").classList.remove("hidden");$("sideName").textContent="Parent";$("sideId").textContent="Linked Student: 2500031331";$("sideAvatar").textContent="P";$("topName").textContent="Parent";$("topAvatar").textContent="P";openPage("parentDashboard")}
- else{$("studentNav").classList.remove("hidden");$("adminNav").classList.add("hidden");$("parentNav").classList.add("hidden");updateUser();openPage("dashboard")}
+ if(role==="admin"){$("studentNav").classList.add("hidden");$("adminNav").classList.remove("hidden");$("sideName").textContent="Administrator";$("sideId").textContent="ERP Admin";$("sideAvatar").textContent="AD";$("topName").textContent="Administrator";$("topAvatar").textContent="AD";openPage("adminDashboard")}
+ else{$("studentNav").classList.remove("hidden");$("adminNav").classList.add("hidden");updateUser();openPage("dashboard")}
  renderCommon();
 }
 function updateUser(){let s=currentStudent();$("sideName").textContent=s.name;$("sideId").textContent=s.id;$("topName").textContent=s.name;$("topAvatar").textContent=initials(s.name);$("sideAvatar").textContent=initials(s.name);$("welcomeName").textContent=s.name.split(" ")[0];$("profileAvatar").textContent=initials(s.name);$("profileName").textContent=s.name;$("profileProgram").textContent=s.program;$("profileId").textContent=s.id}
-function renderCommon(){renderNotices();renderSubjects();renderAttendance();renderResults();renderFees();renderAssignments();renderTimetable();renderProfile();renderAdmin();drawChart();renderDashboard();renderAnalytics();save()}
+function renderCommon(){renderNotices();renderSubjects();renderAttendance();renderResults();renderFees();renderAssignments();renderTimetable();renderProfile();renderAdmin();drawChart();renderDashboard();save()}
 function openPage(name){
  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));$("page-"+name)?.classList.add("active");
  document.querySelectorAll(".nav-item").forEach(n=>n.classList.toggle("active",n.dataset.page===name));
- const titles={dashboard:["Student Dashboard","Overview of your academic journey"],profile:["My Profile","Personal and academic information"],academics:["Academics","Current semester subjects and performance"],attendance:["Attendance","Subject-wise attendance status"],results:["Results","Semester results and grades"],fees:["Fee Details","Track semester fee payments"],timetable:["Time Table","Weekly class schedule"],assignments:["Assignments","Track submissions and deadlines"],notices:["Notices","Official announcements"],analytics:["Academic Analytics","Performance trends and teacher remarks"],reports:["Reports","Generate academic documents"],parentDashboard:["Parent Dashboard","Read-only academic progress"],parentReports:["Student Reports","View the linked student report"],adminDashboard:["Admin Dashboard","ERP control center"],manageStudents:["Student Management","Manage student records"],manageAcademics:["Marks & Results","Update academic performance"],manageAttendance:["Attendance Management","Update attendance records"],manageFees:["Fee Management","Monitor fee payments"],manageNotices:["Notice Management","Publish campus announcements"]};
+ const titles={dashboard:["Student Dashboard","Overview of your academic journey"],profile:["My Profile","Personal and academic information"],academics:["Academics","Current semester subjects and performance"],attendance:["Attendance","Subject-wise attendance status"],results:["Results","Semester results and grades"],fees:["Fee Details","Track semester fee payments"],timetable:["Time Table","Weekly class schedule"],assignments:["Assignments","Track submissions and deadlines"],notices:["Notices","Official announcements"],reports:["Reports","Generate academic documents"],adminDashboard:["Admin Dashboard","ERP control center"],manageStudents:["Student Management","Manage student records"],manageAcademics:["Marks & Results","Update academic performance"],manageAttendance:["Attendance Management","Update attendance records"],manageFees:["Fee Management","Monitor fee payments"],manageNotices:["Notice Management","Publish campus announcements"]};
  if(titles[name]){$("pageTitle").textContent=titles[name][0];$("pageSubtitle").textContent=titles[name][1]}
  $("sidebar").classList.remove("open");window.scrollTo({top:0,behavior:"smooth"});if(name==="dashboard")setTimeout(drawChart,20)
 }
@@ -109,13 +98,6 @@ function renderDashboard(){
  if(role!=="student")return;let s=currentStudent();$("statCgpa").textContent=s.cgpa.toFixed(2);$("statAttendance").textContent=s.attendance+"%";$("statAssignments").textContent=db.assignments.filter(a=>a.status==="Submitted").length+"/"+db.assignments.length;$("statFee").textContent=money(s.fees.total-s.fees.paid);
  $("dashboardNotices").innerHTML=db.notices.slice(0,3).map(n=>`<div class="notice"><h3>${esc(n.title)}</h3><p>${esc(n.text)}</p><time>${n.date}</time></div>`).join("");
  $("dashboardSubjects").innerHTML=s.subjects.map(x=>`<tr><td>${x.code}</td><td><b>${x.name}</b></td><td>${x.credits}</td><td>${x.faculty}</td><td>${x.att}%</td><td><span class="status-pill ${x.att<75?"warning":"success"}">${x.att<75?"Improve":"Good"}</span></td></tr>`).join("")
-}
-function renderAnalytics(){
- if(role!=="student")return;
- let s=currentStudent(), strong=s.subjects.filter(x=>x.att>=75).length, weak=s.subjects.filter(x=>x.att<75||x.total<75).length;
- $("analyticsCgpa").textContent=s.cgpa.toFixed(2);$("strongSubjects").textContent=strong;$("weakSubjects").textContent=weak;
- $("remarksList").innerHTML=`<div class="notice"><h3>Java Programming</h3><p>Good understanding of core concepts. Continue practicing problem solving.</p><time>Faculty remark</time></div><div class="notice"><h3>Engineering Mathematics</h3><p>Needs additional practice in problem-solving and revision.</p><time>Faculty remark</time></div>`;
- setTimeout(()=>{const c=document.getElementById("analyticsChart");if(!c||!c.getContext)return;const ctx=c.getContext("2d"),w=c.width=c.clientWidth*2,h=c.height=c.clientHeight*2;ctx.scale(2,2);let vals=[7.8,8.1,8.4,s.cgpa], max=10;ctx.strokeStyle="#e4ebf3";ctx.beginPath();ctx.moveTo(25,20);ctx.lineTo(c.clientWidth-15,c.clientHeight-30);ctx.stroke();ctx.strokeStyle="#1268d8";ctx.lineWidth=4;ctx.beginPath();vals.forEach((v,i)=>{let x=35+i*((c.clientWidth-70)/(vals.length-1)),y=20+(max-v)/max*(c.clientHeight-55);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();},30);
 }
 function renderProfile(){if(role!=="student")return;let s=currentStudent();$("profileInfo").innerHTML=[["Full Name",s.name],["Student ID",s.id],["Program",s.program],["Department",s.dept],["Year",s.year],["Batch",s.batch],["Email",s.email],["Phone",s.phone],["Date of Birth",s.dob],["Gender",s.gender],["Address",s.address],["Account Status","Active"]].map(x=>`<div><small>${x[0]}</small><b>${esc(x[1])}</b></div>`).join("")}
 function renderSubjects(){if(role!=="student")return;let s=currentStudent();$("subjectCards").innerHTML=s.subjects.map(x=>`<div class="subject-card"><small>${x.code} · ${x.credits} Credits</small><h3>${x.name}</h3><div class="subject-score">${x.total}%</div><small>${x.faculty} · ${x.grade}</small></div>`).join("");$("subjectFilter").innerHTML='<option>All Subjects</option>'+s.subjects.map(x=>`<option>${x.name}</option>`).join("");$("academicTable").innerHTML=s.subjects.map(x=>`<tr><td>${x.code}</td><td>${x.name}</td><td>${x.faculty}</td><td>${x.credits}</td><td>${x.internal}/40</td><td>${x.external}/60</td><td><b>${x.total}</b>/100</td><td><span class="status-pill success">${x.grade}</span></td></tr>`).join("")}
