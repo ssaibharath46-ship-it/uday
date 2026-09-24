@@ -2,186 +2,31 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>KLU ERP — Student Information System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Program System</title>
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<div id="toast"></div>
-
-<!-- LOGIN -->
-<div id="loginScreen" class="login-screen">
-  <div class="login-bg-orb orb1"></div><div class="login-bg-orb orb2"></div>
-  <div class="login-card">
-    <div class="brand-logo"><span>🎓</span><div><b>KLU ERP</b><small>STUDENT INFORMATION SYSTEM</small></div></div>
-    <div class="login-tabs">
-      <button class="login-tab active" data-role="student">Student Login</button>
-      <button class="login-tab" data-role="admin">Admin Login</button>
-    </div>
-    <div class="login-title"><h1 id="loginTitle">Welcome back 👋</h1><p id="loginSubtitle">Sign in to access your student dashboard</p></div>
-    <form id="loginForm">
-      <label id="loginUserLabel">Student ID</label>
-      <div class="input-icon"><span>👤</span><input id="loginUser" required value="2500031331"></div>
-      <label>Password</label>
-      <div class="input-icon"><span>🔒</span><input id="loginPass" type="password" required value="student123"></div>
-      <div class="login-row"><label class="check"><input type="checkbox" id="remember"> Remember me</label><a href="#" onclick="demoCredentials(event)">Demo credentials</a></div>
-      <button class="login-submit">Sign In <span>→</span></button>
-    </form>
-    <div class="login-hint" id="loginHint">Student demo: <b>2500031331</b> / <b>student123</b></div>
+<body class="login-body">
+<div class="login-bg"><span></span><span></span><span></span></div>
+<div class="login-card">
+  <div class="logo-box">🎓</div>
+  <h1>Student Program System</h1>
+  <p class="sub">Student Information & Academic Management</p>
+  <div class="demo">
+    <b>Demo Accounts</b>
+    <div>Admin: <code>kasiudaykiran31@gmail.com</code> / <code>Kiran@131</code></div>
+    <div>Student: <code>student@gmail.com</code> / <code>student123</code></div>
   </div>
+  <form id="loginForm">
+    <label>Email</label>
+    <input id="email" type="email" placeholder="Enter email" required>
+    <label>Password</label>
+    <input id="password" type="password" placeholder="Enter password" required>
+    <button class="btn primary full" type="submit">Login <span>→</span></button>
+  </form>
+  <div id="loginMsg" class="msg"></div>
+  <p class="register-link">New student? <a href="register.html">Create an account</a></p>
 </div>
-
-<!-- APP -->
-<div id="app" class="app hidden">
-  <aside class="sidebar" id="sidebar">
-    <div class="side-brand"><div class="brand-mark">K</div><div><b>KLU ERP</b><small>STUDENT INFORMATION SYSTEM</small></div><button class="mobile-close" onclick="toggleSidebar()">×</button></div>
-    <div class="user-mini">
-      <div class="avatar" id="sideAvatar">UK</div><div><b id="sideName">Uday Kiran</b><small id="sideId">2500031331</small></div>
-    </div>
-    <div class="menu-label">MAIN MENU</div>
-    <nav id="studentNav">
-      <button class="nav-item active" data-page="dashboard"><span>🏠</span>Dashboard</button>
-      <button class="nav-item" data-page="profile"><span>👤</span>My Profile</button>
-      <button class="nav-item" data-page="academics"><span>📚</span>Academics</button>
-      <button class="nav-item" data-page="attendance"><span>🗓️</span>Attendance</button>
-      <button class="nav-item" data-page="results"><span>📊</span>Results</button>
-      <div class="menu-label">STUDENT SERVICES</div>
-      <button class="nav-item" data-page="fees"><span>💳</span>Fee Details</button>
-      <button class="nav-item" data-page="timetable"><span>🕘</span>Time Table</button>
-      <button class="nav-item" data-page="assignments"><span>📝</span>Assignments</button>
-      <button class="nav-item" data-page="notices"><span>📢</span>Notices</button>
-      <button class="nav-item" data-page="reports"><span>📄</span>Reports</button>
-    </nav>
-    <nav id="adminNav" class="hidden">
-      <button class="nav-item active" data-page="adminDashboard"><span>📈</span>Admin Dashboard</button>
-      <button class="nav-item" data-page="manageStudents"><span>👥</span>Students</button>
-      <button class="nav-item" data-page="manageAcademics"><span>📝</span>Marks & Results</button>
-      <button class="nav-item" data-page="manageAttendance"><span>🗓️</span>Attendance</button>
-      <button class="nav-item" data-page="manageFees"><span>💳</span>Fees</button>
-      <button class="nav-item" data-page="manageNotices"><span>📢</span>Notices</button>
-      <button class="nav-item" data-page="reports"><span>📄</span>Reports</button>
-    </nav>
-    <div class="side-bottom">
-      <button class="nav-item" onclick="toggleTheme()"><span>🌙</span>Dark Mode</button>
-      <button class="nav-item logout" onclick="logout()"><span>↪</span>Logout</button>
-    </div>
-  </aside>
-
-  <main class="main">
-    <header class="topbar">
-      <button class="hamburger" onclick="toggleSidebar()">☰</button>
-      <div><h1 id="pageTitle">Student Dashboard</h1><p id="pageSubtitle">Overview of your academic journey</p></div>
-      <div class="top-actions"><button class="icon-btn" onclick="showNotifications()">🔔<i id="notifDot"></i></button><button class="profile-pill" onclick="goProfile()"><span class="avatar sm" id="topAvatar">UK</span><b id="topName">Uday Kiran</b><span>⌄</span></button></div>
-    </header>
-
-    <div class="content">
-
-      <!-- STUDENT DASHBOARD -->
-      <section class="page active" id="page-dashboard">
-        <div class="welcome-banner"><div><span class="eyebrow">ACADEMIC OVERVIEW</span><h2>Good morning, <span id="welcomeName">Uday</span> 👋</h2><p>Here’s what is happening with your academic progress.</p></div><div class="banner-shape">✦</div></div>
-        <div class="stat-grid">
-          <div class="stat-card"><div class="stat-icon blue">🎓</div><div><small>Current CGPA</small><strong id="statCgpa">8.62</strong><em>↑ 0.22 this semester</em></div></div>
-          <div class="stat-card"><div class="stat-icon green">🗓️</div><div><small>Attendance</small><strong id="statAttendance">86%</strong><em class="green-text">Good standing</em></div></div>
-          <div class="stat-card"><div class="stat-icon orange">📝</div><div><small>Assignments</small><strong id="statAssignments">8/10</strong><em>2 pending</em></div></div>
-          <div class="stat-card"><div class="stat-icon purple">💳</div><div><small>Fee Balance</small><strong id="statFee">₹12,500</strong><em>Due 30 Sep</em></div></div>
-        </div>
-        <div class="two-col">
-          <div class="panel chart-panel"><div class="panel-head"><div><h3>📈 Semester Performance</h3><small>CGPA progression</small></div><span class="live-badge">● LIVE</span></div><div class="chart-wrap"><canvas id="performanceChart"></canvas></div></div>
-          <div class="panel"><div class="panel-head"><div><h3>📢 Latest Notices</h3><small>Important updates</small></div><button class="text-btn" onclick="openPage('notices')">View all</button></div><div id="dashboardNotices"></div></div>
-        </div>
-        <div class="panel"><div class="panel-head"><div><h3>📚 Current Semester Subjects</h3><small>Semester 4 · 2026-27</small></div><button class="text-btn" onclick="openPage('academics')">View academics →</button></div><div class="table-scroll"><table><thead><tr><th>Code</th><th>Subject</th><th>Credits</th><th>Faculty</th><th>Attendance</th><th>Status</th></tr></thead><tbody id="dashboardSubjects"></tbody></table></div></div>
-      </section>
-
-      <!-- PROFILE -->
-      <section class="page" id="page-profile">
-        <div class="page-head"><div><span class="eyebrow">ACCOUNT</span><h2>My Profile</h2><p>View and manage your personal information.</p></div><button class="primary-btn" onclick="editProfile()">✎ Edit Profile</button></div>
-        <div class="profile-layout"><div class="profile-hero panel"><div class="big-avatar" id="profileAvatar">UK</div><h2 id="profileName">Uday Kiran</h2><p id="profileProgram">B.Tech · CSE</p><span class="status-pill success">● Active Student</span><hr><div class="profile-meta"><div><small>Student ID</small><b id="profileId">2500031331</b></div><div><small>Batch</small><b>2024–2028</b></div><div><small>Semester</small><b>IV</b></div></div></div><div class="panel"><div class="panel-head"><h3>Personal Information</h3></div><div class="info-grid" id="profileInfo"></div></div></div>
-      </section>
-
-      <!-- ACADEMICS -->
-      <section class="page" id="page-academics">
-        <div class="page-head"><div><span class="eyebrow">ACADEMICS</span><h2>Current Semester</h2><p>Subjects, credits, faculty and academic performance.</p></div></div>
-        <div class="subject-cards" id="subjectCards"></div>
-        <div class="panel"><div class="panel-head"><h3>Subject Details</h3><select class="small-select" id="subjectFilter"><option>All Subjects</option></select></div><div class="table-scroll"><table><thead><tr><th>Code</th><th>Subject</th><th>Faculty</th><th>Credits</th><th>Internal</th><th>Final</th><th>Total</th><th>Grade</th></tr></thead><tbody id="academicTable"></tbody></table></div></div>
-      </section>
-
-      <!-- ATTENDANCE -->
-      <section class="page" id="page-attendance">
-        <div class="page-head"><div><span class="eyebrow">ACADEMICS</span><h2>Attendance</h2><p>Real-time subject-wise attendance status.</p></div></div>
-        <div class="attendance-overview"><div class="attendance-ring"><div><strong id="attendanceBig">86%</strong><span>Overall</span></div></div><div><h3>Attendance Summary</h3><p>Minimum required attendance: <b>75%</b></p><div class="mini-stats"><div><b id="classesHeld">112</b><small>Classes Held</small></div><div><b id="classesAttended">96</b><small>Attended</small></div><div><b id="classesAbsent">16</b><small>Absent</small></div></div></div></div>
-        <div class="panel"><div class="panel-head"><h3>Subject-wise Attendance</h3><span class="status-pill success">● Updated today</span></div><div id="attendanceRows"></div></div>
-      </section>
-
-      <!-- RESULTS -->
-      <section class="page" id="page-results">
-        <div class="page-head"><div><span class="eyebrow">ACADEMICS</span><h2>Results & Grades</h2><p>Semester-wise academic performance.</p></div><button class="primary-btn" onclick="printReport()">🖨 Print Result</button></div>
-        <div class="result-summary"><div><small>Current CGPA</small><strong>8.62</strong></div><div><small>Semester SGPA</small><strong>8.74</strong></div><div><small>Credits Earned</small><strong>72</strong></div><div><small>Backlogs</small><strong class="green-text">0</strong></div></div>
-        <div class="panel"><div class="panel-head"><h3>Semester Results</h3><span class="status-pill success">All subjects cleared</span></div><div class="table-scroll"><table><thead><tr><th>Code</th><th>Subject</th><th>Internal</th><th>External</th><th>Total</th><th>Grade</th><th>Grade Point</th></tr></thead><tbody id="resultsTable"></tbody></table></div></div>
-      </section>
-
-      <!-- FEES -->
-      <section class="page" id="page-fees">
-        <div class="page-head"><div><span class="eyebrow">STUDENT SERVICES</span><h2>Fee Details</h2><p>Track your semester fee payments.</p></div><button class="primary-btn" onclick="payFee()">💳 Pay Now</button></div>
-        <div class="fee-cards"><div class="fee-card"><small>Total Fee</small><strong>₹85,000</strong></div><div class="fee-card paid"><small>Paid</small><strong>₹72,500</strong></div><div class="fee-card due"><small>Balance</small><strong id="feeDue">₹12,500</strong></div></div>
-        <div class="panel"><div class="panel-head"><h3>Payment History</h3></div><div class="table-scroll"><table><thead><tr><th>Date</th><th>Receipt No.</th><th>Description</th><th>Amount</th><th>Status</th></tr></thead><tbody id="feeTable"></tbody></table></div></div>
-      </section>
-
-      <!-- TIMETABLE -->
-      <section class="page" id="page-timetable">
-        <div class="page-head"><div><span class="eyebrow">STUDENT SERVICES</span><h2>Time Table</h2><p>Weekly class schedule.</p></div><span class="today-badge">Today · Wednesday</span></div>
-        <div class="panel"><div class="table-scroll"><table class="timetable"><thead><tr><th>Time</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th></tr></thead><tbody id="timetableBody"></tbody></table></div></div>
-      </section>
-
-      <!-- ASSIGNMENTS -->
-      <section class="page" id="page-assignments">
-        <div class="page-head"><div><span class="eyebrow">STUDENT SERVICES</span><h2>Assignments</h2><p>Track submissions and upcoming deadlines.</p></div><button class="primary-btn" onclick="submitAssignment()">＋ Submit Assignment</button></div>
-        <div class="assignment-grid" id="assignmentGrid"></div>
-      </section>
-
-      <!-- NOTICES -->
-      <section class="page" id="page-notices">
-        <div class="page-head"><div><span class="eyebrow">COMMUNICATION</span><h2>Notices</h2><p>Official announcements and campus updates.</p></div></div>
-        <div class="notice-list" id="noticeList"></div>
-      </section>
-
-      <!-- REPORTS -->
-      <section class="page" id="page-reports">
-        <div class="page-head"><div><span class="eyebrow">DOCUMENTS</span><h2>Reports</h2><p>Generate and print academic documents.</p></div></div>
-        <div class="report-grid"><div class="report-action" onclick="printReport()">📄<b>Academic Report</b><small>Marks, grades & CGPA</small><span>Generate →</span></div><div class="report-action" onclick="openPage('attendance')">🗓️<b>Attendance Report</b><small>Subject-wise attendance</small><span>View →</span></div><div class="report-action" onclick="openPage('fees')">💳<b>Fee Statement</b><small>Payment history</small><span>View →</span></div></div></section>
-
-      <!-- ADMIN -->
-      <section class="page" id="page-adminDashboard">
-        <div class="welcome-banner admin-banner"><div><span class="eyebrow">ADMIN CONTROL CENTER</span><h2>Good morning, Administrator ⚡</h2><p>Monitor students, academics, attendance and campus operations.</p></div><div class="banner-shape">⌘</div></div>
-        <div class="stat-grid"><div class="stat-card"><div class="stat-icon blue">👥</div><div><small>Total Students</small><strong id="adminStudents">0</strong><em>Across all departments</em></div></div><div class="stat-card"><div class="stat-icon green">📈</div><div><small>Avg. Attendance</small><strong id="adminAttendance">0%</strong><em>Institution level</em></div></div><div class="stat-card"><div class="stat-icon orange">💳</div><div><small>Pending Fees</small><strong>₹4.82L</strong><em>27 students</em></div></div><div class="stat-card"><div class="stat-icon purple">📝</div><div><small>Pending Tasks</small><strong>14</strong><em>Need attention</em></div></div></div>
-        <div class="two-col"><div class="panel chart-panel"><div class="panel-head"><h3>📊 Department Performance</h3></div><div class="bar-chart" id="deptChart"></div></div><div class="panel"><div class="panel-head"><h3>⚠️ Attention Required</h3></div><div id="adminAlerts"></div></div></div>
-        <div class="panel"><div class="panel-head"><h3>Recent System Activity</h3></div><div id="activityFeed"></div></div>
-      </section>
-
-      <section class="page" id="page-manageStudents">
-        <div class="page-head"><div><span class="eyebrow">ADMIN</span><h2>Student Management</h2><p>Manage student records and access.</p></div><button class="primary-btn" onclick="adminAddStudent()">＋ Add Student</button></div>
-        <div class="panel"><div class="toolbar"><input id="adminSearch" placeholder="🔍 Search by name, ID or department..." oninput="renderAdminStudents()"><button class="secondary-btn" onclick="exportStudents()">⬇ Export CSV</button></div><div class="table-scroll"><table><thead><tr><th>ID</th><th>Name</th><th>Department</th><th>Year</th><th>Attendance</th><th>CGPA</th><th>Status</th><th>Action</th></tr></thead><tbody id="adminStudentTable"></tbody></table></div></div>
-      </section>
-
-      <section class="page" id="page-manageAcademics">
-        <div class="page-head"><div><span class="eyebrow">ADMIN</span><h2>Marks & Results</h2><p>Enter and update student academic performance.</p></div></div>
-        <div class="panel"><div class="form-grid"><div><label>Student</label><select id="adminMarkStudent"></select></div><div><label>Subject</label><select id="adminMarkSubject"><option>Java Programming</option><option>Data Structures</option><option>Database Systems</option><option>Engineering Mathematics</option></select></div><div><label>Internal Marks / 40</label><input type="number" id="adminInternal" max="40"></div><div><label>External Marks / 60</label><input type="number" id="adminExternal" max="60"></div></div><button class="primary-btn" onclick="adminSaveMarks()">Save Result</button><div id="adminMarkMsg"></div></div></section>
-
-      <section class="page" id="page-manageAttendance">
-        <div class="page-head"><div><span class="eyebrow">ADMIN</span><h2>Attendance Management</h2><p>Update student attendance records.</p></div></div>
-        <div class="panel"><div class="form-grid"><div><label>Student</label><select id="adminAttStudent"></select></div><div><label>Subject</label><select id="adminAttSubject"><option>Java Programming</option><option>Data Structures</option><option>Database Systems</option><option>Engineering Mathematics</option></select></div><div><label>Classes Held</label><input type="number" id="adminHeld"></div><div><label>Classes Attended</label><input type="number" id="adminAttended"></div></div><button class="primary-btn" onclick="adminSaveAttendance()">Update Attendance</button><div id="adminAttMsg"></div></div></section>
-
-      <section class="page" id="page-manageFees">
-        <div class="page-head"><div><span class="eyebrow">ADMIN</span><h2>Fee Management</h2><p>Monitor payment status and outstanding balances.</p></div></div>
-        <div class="fee-cards"><div class="fee-card"><small>Total Collection</small><strong>₹68.4L</strong></div><div class="fee-card paid"><small>Collected</small><strong>₹61.9L</strong></div><div class="fee-card due"><small>Outstanding</small><strong>₹6.5L</strong></div></div>
-        <div class="panel"><div class="panel-head"><h3>Students with Outstanding Fees</h3></div><div class="table-scroll"><table><thead><tr><th>Student</th><th>ID</th><th>Total</th><th>Paid</th><th>Balance</th><th>Status</th></tr></thead><tbody><tr><td>Uday Kiran</td><td>2500031331</td><td>₹85,000</td><td>₹72,500</td><td>₹12,500</td><td><span class="status-pill warning">Pending</span></td></tr><tr><td>Rahul Kumar</td><td>2500031332</td><td>₹85,000</td><td>₹85,000</td><td>₹0</td><td><span class="status-pill success">Paid</span></td></tr></tbody></table></div></div></section>
-
-      <section class="page" id="page-manageNotices">
-        <div class="page-head"><div><span class="eyebrow">ADMIN</span><h2>Notice Management</h2><p>Publish announcements to students.</p></div><button class="primary-btn" onclick="publishNotice()">＋ Publish Notice</button></div>
-        <div class="panel"><div class="notice-list" id="adminNoticeList"></div></div></section>
-    </div>
-  </main>
-</div>
-
 <script src="script.js"></script>
 </body>
 </html>

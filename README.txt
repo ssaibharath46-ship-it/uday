@@ -1,53 +1,62 @@
-# KLU ERP Student Report System — Frontend Only
+STUDENT PROGRAM SYSTEM - FINAL
 
-A high-fidelity ERP-style student information system built with **HTML, CSS and JavaScript only**.
+Open index.html in Chrome.
 
-## Demo logins
+LOGIN:
+Admin:
+  admin@gmail.com
+  admin123
 
 Student:
-- ID: `2500031331`
-- Password: `student123`
+  student@gmail.com
+  student123
 
-Admin:
-- Username: `admin`
-- Password: `admin123`
+REGISTER:
+Click "Create an account" on the login page.
+You can register a Student or Parent account.
+For a Parent account, enter the registered Student Email to connect the parent to that student.
 
-## Features
+ADMIN -> STUDENT CONNECTION:
+1. Login as Admin.
+2. Open Reports.
+3. Select a student.
+4. Enter Marks, Attendance and Teacher Remarks.
+5. Click Save / Update Report.
+6. Logout.
+7. Login as that Student.
+8. Open Results or Reports.
+The new information will appear automatically.
 
-### Student
-- Animated login
+ADMIN FEATURES:
+- Dashboard statistics
+- Student accounts
+- Add/delete students
+- Add/update reports
+- Marks and attendance
+- Teacher remarks
+- Notices
+- Analytics
+
+STUDENT FEATURES:
 - Dashboard
-- CGPA/SGPA
-- Semester performance chart
-- Current semester subjects
 - Profile
+- Academics
 - Attendance
 - Results
-- Fee details
-- Payment simulation
+- Fees
 - Timetable
 - Assignments
 - Notices
-- Reports/print
-- Notifications
+- Reports
 - Dark mode
-- Responsive mobile sidebar
 
-### Admin
-- Admin dashboard
-- Student management
-- Add/edit students
-- Search students
-- Export CSV
-- Marks/results entry
-- Attendance entry
-- Fee monitoring
-- Notice publishing
-- Activity feed
-- Department performance chart
+PARENT FEATURES:
+- Linked student
+- Latest report
+- Marks
+- Attendance
+- Grade
+- Teacher remarks
+- Notices
 
-## Data
-
-All data is stored in browser `localStorage`. It persists after refresh and browser restart on the same browser/device.
-
-This is a frontend-only demonstration. Real multi-user authentication, server-side validation and shared institutional data would require a backend/database.
+This is a frontend prototype. Data is stored in browser localStorage. For real multi-device deployment, connect the same UI to a backend database.
